@@ -521,3 +521,97 @@ if (confirmLocationButton) {
     closeMap();
   });
 }
+
+/* =====================================================
+   WHATSAPP BOOKING FORM
+===================================================== */
+
+const bookingForm = document.getElementById("bookingForm");
+
+if (bookingForm) {
+  bookingForm.addEventListener("submit", function (event) {
+    event.preventDefault();
+
+    // Get form values
+    const fullName = document.getElementById("fullName").value.trim();
+    const phone = document.getElementById("phone").value.trim();
+    const pickup = document.getElementById("pickup").value.trim();
+    const drop = document.getElementById("drop").value.trim();
+    const tripType = document.getElementById("tripType").value;
+    const pickupDate = document.getElementById("pickupDate").value;
+    const pickupTime = document.getElementById("pickupTime").value;
+    const returnDate = document.getElementById("returnDate").value;
+    const passengers = document.getElementById("passengers").value;
+    const notes = document.getElementById("notes").value.trim();
+
+    // Validation
+    if (
+      !fullName ||
+      !phone ||
+      !pickup ||
+      !drop ||
+      !tripType ||
+      !pickupDate ||
+      !pickupTime ||
+      !passengers
+    ) {
+      alert("Please fill all required fields.");
+      return;
+    }
+
+    // Mobile validation
+    if (!/^[0-9]{10}$/.test(phone)) {
+      alert("Please enter a valid 10-digit mobile number.");
+      return;
+    }
+
+    // WhatsApp number
+    const whatsappNumber = "918300242430";
+
+    // Create WhatsApp message
+    let message = `🚗 *SK TRAVELS - TRIP ENQUIRY*
+
+👤 *Customer Details*
+Name: ${fullName}
+Mobile: ${phone}
+
+📍 *Journey Details*
+Pickup: ${pickup}
+Destination: ${drop}
+
+🗓️ *Trip Details*
+Trip Type: ${tripType}
+Travel Date: ${pickupDate}
+Pickup Time: ${pickupTime}
+Return Date: ${returnDate || "Not applicable"}
+Passengers: ${passengers}
+
+🚘 *Vehicle*
+Maruti Suzuki Dzire
+5 Seater • AC • Sedan`;
+
+    if (notes) {
+      message += `
+
+📝 *Additional Requirements*
+${notes}`;
+    }
+
+    message += `
+
+Please confirm the availability and fare.
+
+Thank you.
+*SK TRAVELS*`;
+
+    // Encode message for URL
+    const whatsappURL =
+      "https://wa.me/" +
+      whatsappNumber +
+      "?text=" +
+      encodeURIComponent(message);
+
+    // Open WhatsApp
+    window.open(whatsappURL, "_blank");
+  });
+}
