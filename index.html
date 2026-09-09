@@ -19,112 +19,115 @@
 
     <title>SK Travels | Your Journey, Our Commitment</title>
 
-    <!-- =====================================================
-         BOOTSTRAP
-    ====================================================== -->
-
+    <!-- Bootstrap -->
     <link
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
       rel="stylesheet"
     />
 
-    <!-- =====================================================
-         BOOTSTRAP ICONS
-    ====================================================== -->
-
+    <!-- Bootstrap Icons -->
     <link
       href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css"
       rel="stylesheet"
     />
 
-    <!-- =====================================================
-         GOOGLE FONTS
-    ====================================================== -->
+    <!-- Leaflet CSS -->
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+      crossorigin=""
+    />
 
+    <!-- Google Fonts -->
     <link
       href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Playfair+Display:wght@600;700&display=swap"
       rel="stylesheet"
     />
 
-    <!-- =====================================================
-         CUSTOM CSS
-    ====================================================== -->
-
+    <!-- Custom CSS -->
     <link rel="stylesheet" href="style.css" />
   </head>
 
   <body>
     <!-- =====================================================
-         NAVBAR
-    ====================================================== -->
+     TOP BAR
+===================================================== -->
 
-    <nav
-      class="navbar navbar-expand-lg navbar-light sticky-top"
-      id="mainNavbar"
-    >
+    <div class="top-bar">
       <div class="container">
-        <!-- BRAND -->
+        <div class="top-content">
+          <span>
+            <i class="bi bi-geo-alt-fill"></i>
+            Coimbatore, Tamil Nadu
+          </span>
 
+          <span class="desktop-only">
+            <i class="bi bi-clock"></i>
+            Local • Airport • Outstation
+          </span>
+        </div>
+      </div>
+    </div>
+
+    <!-- =====================================================
+     NAVBAR
+===================================================== -->
+
+    <nav class="navbar navbar-expand-lg sticky-top" id="mainNavbar">
+      <div class="container">
         <a class="navbar-brand brand" href="#home">
           <div class="brand-icon">
             <i class="bi bi-car-front-fill"></i>
           </div>
 
           <div>
-            <strong> SK TRAVELS </strong>
+            <strong>SK TRAVELS</strong>
 
-            <small> TRAVEL & CAR RENTALS </small>
+            <small>TRAVEL & CAR RENTALS</small>
           </div>
         </a>
-
-        <!-- MOBILE BUTTON -->
 
         <button
           class="navbar-toggler"
           type="button"
           data-bs-toggle="collapse"
           data-bs-target="#mainMenu"
-          aria-controls="mainMenu"
-          aria-expanded="false"
-          aria-label="Toggle navigation"
         >
           <span class="navbar-toggler-icon"></span>
         </button>
 
-        <!-- NAVIGATION -->
-
         <div class="collapse navbar-collapse" id="mainMenu">
           <ul class="navbar-nav mx-auto">
             <li class="nav-item">
-              <a class="nav-link active" href="#home"> Home </a>
+              <a class="nav-link active" href="#home">Home</a>
             </li>
 
             <li class="nav-item">
-              <a class="nav-link" href="#about"> About </a>
+              <a class="nav-link" href="#about">About</a>
             </li>
 
             <li class="nav-item">
-              <a class="nav-link" href="#fleet"> Our Car </a>
+              <a class="nav-link" href="#fleet">Our Car</a>
             </li>
 
             <li class="nav-item">
-              <a class="nav-link" href="#destinations"> Destinations </a>
+              <a class="nav-link" href="#destinations">Destinations</a>
             </li>
 
             <li class="nav-item">
-              <a class="nav-link" href="#services"> Services </a>
+              <a class="nav-link" href="#services">Services</a>
             </li>
 
             <li class="nav-item">
-              <a class="nav-link" href="#gallery"> Gallery </a>
+              <a class="nav-link" href="#gallery">Gallery</a>
             </li>
 
             <li class="nav-item">
-              <a class="nav-link" href="#booking"> Plan Trip </a>
+              <a class="nav-link" href="#booking">Plan Trip</a>
             </li>
 
             <li class="nav-item">
-              <a class="nav-link" href="#contact"> Contact </a>
+              <a class="nav-link" href="#contact">Contact</a>
             </li>
           </ul>
 
@@ -138,16 +141,14 @@
     </nav>
 
     <!-- =====================================================
-         HERO
-    ====================================================== -->
+     HERO
+===================================================== -->
 
     <section id="home" class="hero">
       <div class="hero-overlay"></div>
 
       <div class="container hero-container">
         <div class="row align-items-center g-5">
-          <!-- HERO CONTENT -->
-
           <div class="col-lg-6">
             <div class="hero-content">
               <span class="eyebrow">
@@ -159,7 +160,7 @@
               <h1>
                 Your Journey.
 
-                <span> Our Commitment. </span>
+                <span>Our Commitment.</span>
               </h1>
 
               <p>
@@ -187,26 +188,21 @@
               <div class="hero-trust">
                 <span>
                   <i class="bi bi-check-circle-fill"></i>
-
                   Easy WhatsApp enquiry
                 </span>
 
                 <span>
                   <i class="bi bi-check-circle-fill"></i>
-
                   Personal service
                 </span>
 
                 <span>
                   <i class="bi bi-check-circle-fill"></i>
-
                   Comfortable Dzire
                 </span>
               </div>
             </div>
           </div>
-
-          <!-- HERO IMAGE -->
 
           <div class="col-lg-6">
             <div class="hero-image">
@@ -227,14 +223,14 @@
     </section>
 
     <!-- =====================================================
-         WHY CHOOSE US
-    ====================================================== -->
+     WHY CHOOSE US
+===================================================== -->
 
     <section class="why-section">
       <div class="container">
         <div class="why-card">
           <div class="section-title text-center">
-            <span> WHY SK TRAVELS </span>
+            <span>WHY SK TRAVELS</span>
 
             <h2>Travel with confidence</h2>
 
@@ -244,8 +240,8 @@
           <div class="row g-4 mt-3">
             <div class="col-6 col-lg-4">
               <div class="feature">
-                <div class="feature-icon bg-warning  border-2">
-                  <i class="bi bi-car-front text-dark"></i>
+                <div class="feature-icon">
+                  <i class="bi bi-car-front"></i>
                 </div>
 
                 <h3>Well-Maintained Car</h3>
@@ -256,8 +252,8 @@
 
             <div class="col-6 col-lg-4">
               <div class="feature">
-                <div class="feature-icon bg-warning border-2">
-                  <i class="bi bi-person-check text-dark"></i>
+                <div class="feature-icon">
+                  <i class="bi bi-person-check"></i>
                 </div>
 
                 <h3>Professional Driver</h3>
@@ -268,8 +264,8 @@
 
             <div class="col-6 col-lg-4">
               <div class="feature">
-                <div class="feature-icon bg-warning border-2">
-                  <i class="bi bi-clock-history text-dark"></i>
+                <div class="feature-icon">
+                  <i class="bi bi-clock-history"></i>
                 </div>
 
                 <h3>On-Time Service</h3>
@@ -280,8 +276,8 @@
 
             <div class="col-6 col-lg-4">
               <div class="feature">
-                <div class="feature-icon bg-warning border-2">
-                  <i class="bi bi-wallet2 text-dark"></i>
+                <div class="feature-icon">
+                  <i class="bi bi-wallet2"></i>
                 </div>
 
                 <h3>Clear Pricing</h3>
@@ -292,8 +288,8 @@
 
             <div class="col-6 col-lg-4">
               <div class="feature">
-                <div class="feature-icon bg-warning border-2">
-                  <i class="bi bi-whatsapp text-dark"></i>
+                <div class="feature-icon">
+                  <i class="bi bi-whatsapp"></i>
                 </div>
 
                 <h3>Easy Booking</h3>
@@ -304,8 +300,8 @@
 
             <div class="col-6 col-lg-4">
               <div class="feature">
-                <div class="feature-icon bg-warning border-2">
-                  <i class="bi bi-headset text-dark"></i>
+                <div class="feature-icon">
+                  <i class="bi bi-headset"></i>
                 </div>
 
                 <h3>Direct Support</h3>
@@ -319,15 +315,15 @@
     </section>
 
     <!-- =====================================================
-         ABOUT
-    ====================================================== -->
+     ABOUT
+===================================================== -->
 
     <section id="about" class="about-section">
       <div class="container">
         <div class="row align-items-center g-5">
           <div class="col-lg-6">
             <div class="section-title">
-              <span> ABOUT SK TRAVELS </span>
+              <span>ABOUT SK TRAVELS</span>
 
               <h2>A journey handled with care.</h2>
 
@@ -344,25 +340,21 @@
             <div class="check-list">
               <div>
                 <i class="bi bi-check-circle-fill"></i>
-
                 Comfortable travel
               </div>
 
               <div>
                 <i class="bi bi-check-circle-fill"></i>
-
                 Direct driver communication
               </div>
 
               <div>
                 <i class="bi bi-check-circle-fill"></i>
-
                 Local and outstation trips
               </div>
 
               <div>
                 <i class="bi bi-check-circle-fill"></i>
-
                 Easy WhatsApp enquiries
               </div>
             </div>
@@ -371,12 +363,12 @@
           <div class="col-lg-6">
             <div class="about-image">
               <img
-                src="../Images/Left_right.png "
+                src="../Images/Left_right.png"
                 alt="Maruti Suzuki Dzire - SK Travels"
               />
 
               <div class="about-badge">
-                <strong> SK TRAVELS </strong>
+                <strong>SK TRAVELS</strong>
 
                 <span> YOUR JOURNEY, OUR COMMITMENT. </span>
               </div>
@@ -387,13 +379,13 @@
     </section>
 
     <!-- =====================================================
-         OUR CAR
-    ====================================================== -->
+     OUR CAR
+===================================================== -->
 
     <section id="fleet" class="fleet-section">
       <div class="container">
         <div class="section-title text-center">
-          <span> OUR CAR </span>
+          <span>OUR CAR</span>
 
           <h2>Comfortable ride for your journey</h2>
 
@@ -410,7 +402,7 @@
               </div>
 
               <div class="fleet-content">
-                <span> SEDAN </span>
+                <span>SEDAN</span>
 
                 <h3>Maruti Suzuki Dzire</h3>
 
@@ -422,19 +414,16 @@
                 <div class="fleet-details">
                   <div>
                     <i class="bi bi-people"></i>
-
                     5 Seater
                   </div>
 
                   <div>
                     <i class="bi bi-snow"></i>
-
                     AC
                   </div>
 
                   <div>
                     <i class="bi bi-car-front"></i>
-
                     Sedan
                   </div>
                 </div>
@@ -452,13 +441,13 @@
     </section>
 
     <!-- =====================================================
-         DESTINATIONS
-    ====================================================== -->
+     DESTINATIONS
+===================================================== -->
 
     <section id="destinations" class="destinations">
       <div class="container">
         <div class="section-title text-center">
-          <span> DESTINATIONS </span>
+          <span>DESTINATIONS</span>
 
           <h2>Where will your journey take you?</h2>
 
@@ -469,7 +458,7 @@
           <div class="col-md-6 col-lg-4">
             <div class="destination-card destination-one">
               <div>
-                <span> HILL ESCAPE </span>
+                <span>HILL ESCAPE</span>
 
                 <h3>Kodaikanal</h3>
 
@@ -485,7 +474,7 @@
           <div class="col-md-6 col-lg-4">
             <div class="destination-card destination-two">
               <div>
-                <span> QUEEN OF HILLS </span>
+                <span>QUEEN OF HILLS</span>
 
                 <h3>Ooty</h3>
 
@@ -501,7 +490,7 @@
           <div class="col-md-6 col-lg-4">
             <div class="destination-card destination-three">
               <div>
-                <span> GREEN ESCAPE </span>
+                <span>GREEN ESCAPE</span>
 
                 <h3>Munnar</h3>
 
@@ -514,22 +503,17 @@
             </div>
           </div>
         </div>
-
-        <p class="destination-note">
-          Sample destinations — update these with the destinations actually
-          served by SK Travels.
-        </p>
       </div>
     </section>
 
     <!-- =====================================================
-         SERVICES
-    ====================================================== -->
+     SERVICES
+===================================================== -->
 
     <section id="services" class="services">
       <div class="container">
         <div class="section-title light text-center">
-          <span> OUR SERVICES </span>
+          <span>OUR SERVICES</span>
 
           <h2>Travel made simple</h2>
 
@@ -539,8 +523,8 @@
         <div class="row g-4 mt-3">
           <div class="col-md-6 col-lg-3">
             <div class="service-card">
-              <div class="service-icon bg-warning border-2">
-                <i class="bi bi-geo-alt text-dark"></i>
+              <div class="service-icon">
+                <i class="bi bi-geo-alt"></i>
               </div>
 
               <h3>Local Trips</h3>
@@ -551,8 +535,8 @@
 
           <div class="col-md-6 col-lg-3">
             <div class="service-card">
-              <div class="service-icon bg-warning border-2">
-                <i class="bi bi-airplane text-dark"></i>
+              <div class="service-icon">
+                <i class="bi bi-airplane"></i>
               </div>
 
               <h3>Airport Transfers</h3>
@@ -563,8 +547,8 @@
 
           <div class="col-md-6 col-lg-3">
             <div class="service-card">
-              <div class="service-icon bg-warning border-2">
-                <i class="bi bi-signpost-2 text-dark"></i>
+              <div class="service-icon">
+                <i class="bi bi-signpost-2"></i>
               </div>
 
               <h3>Outstation Trips</h3>
@@ -575,8 +559,8 @@
 
           <div class="col-md-6 col-lg-3">
             <div class="service-card">
-              <div class="service-icon bg-warning border-2">
-                <i class="bi bi-arrow-repeat text-dark"></i>
+              <div class="service-icon">
+                <i class="bi bi-arrow-repeat"></i>
               </div>
 
               <h3>One Way / Round Trip</h3>
@@ -589,13 +573,13 @@
     </section>
 
     <!-- =====================================================
-         GALLERY
-    ====================================================== -->
+     GALLERY
+===================================================== -->
 
     <section id="gallery" class="gallery-section">
       <div class="container">
         <div class="section-title text-center">
-          <span> GALLERY </span>
+          <span>GALLERY</span>
 
           <h2>A glimpse of the journey</h2>
 
@@ -603,7 +587,7 @@
         </div>
 
         <div class="row g-3 mt-3">
-          <div class="col-12 col-md-6 col-lg-4">
+          <div class="col-md-6 col-lg-4">
             <div class="gallery-item">
               <img
                 src="../Images/front.png"
@@ -611,29 +595,29 @@
               />
 
               <div class="gallery-overlay">
-                <span> SK TRAVELS </span>
+                <span>SK TRAVELS</span>
 
                 <h3>Comfortable Ride</h3>
               </div>
             </div>
           </div>
 
-          <div class="col-12 col-md-6 col-lg-4">
+          <div class="col-md-6 col-lg-4">
             <div class="gallery-item">
               <img
-                src="../Images/Left-right.png"
+                src="../Images/Left_right.png"
                 alt="SK Travels Dzire side view"
               />
 
               <div class="gallery-overlay">
-                <span> SK TRAVELS </span>
+                <span>SK TRAVELS</span>
 
                 <h3>Ready for Your Journey</h3>
               </div>
             </div>
           </div>
 
-          <div class="col-12 col-md-6 col-lg-4">
+          <div class="col-md-6 col-lg-4">
             <div class="gallery-item">
               <img
                 src="https://images.unsplash.com/photo-1500534623283-312aade485b7?auto=format&fit=crop&w=1200&q=85"
@@ -641,14 +625,14 @@
               />
 
               <div class="gallery-overlay">
-                <span> TRAVEL </span>
+                <span>TRAVEL</span>
 
                 <h3>Explore More</h3>
               </div>
             </div>
           </div>
 
-          <div class="col-12 col-md-6 col-lg-4">
+          <div class="col-md-6 col-lg-4">
             <div class="gallery-item">
               <img
                 src="https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=1200&q=85"
@@ -656,14 +640,14 @@
               />
 
               <div class="gallery-overlay">
-                <span> OUTSTATION </span>
+                <span>OUTSTATION</span>
 
                 <h3>Discover New Places</h3>
               </div>
             </div>
           </div>
 
-          <div class="col-12 col-md-6 col-lg-4">
+          <div class="col-md-6 col-lg-4">
             <div class="gallery-item">
               <img
                 src="https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?auto=format&fit=crop&w=1200&q=85"
@@ -671,14 +655,14 @@
               />
 
               <div class="gallery-overlay">
-                <span> ROAD TRIP </span>
+                <span>ROAD TRIP</span>
 
                 <h3>Enjoy the Journey</h3>
               </div>
             </div>
           </div>
 
-          <div class="col-12 col-md-6 col-lg-4">
+          <div class="col-md-6 col-lg-4">
             <div class="gallery-item">
               <img
                 src="https://images.unsplash.com/photo-1526772662000-3f88f10405ff?auto=format&fit=crop&w=1200&q=85"
@@ -686,7 +670,7 @@
               />
 
               <div class="gallery-overlay">
-                <span> JOURNEY </span>
+                <span>JOURNEY</span>
 
                 <h3>Your Next Adventure</h3>
               </div>
@@ -697,345 +681,467 @@
     </section>
 
     <!-- =====================================================
-         BOOKING
-    ====================================================== -->
+     BOOKING
+===================================================== -->
 
     <section id="booking" class="booking-section">
       <div class="container">
-        <div class="booking-card">
-          <div class="section-title text-center">
-            <span> WHATSAPP TRIP ENQUIRY </span>
+        <div class="booking-wrapper">
+          <!-- LEFT INFORMATION -->
 
-            <h2>Plan Your Journey</h2>
+          <div class="booking-info">
+            <span class="booking-label"> SK TRAVELS </span>
 
-            <div class="gold-line"></div>
+            <h2>
+              Plan your journey
+              <span>with confidence.</span>
+            </h2>
 
             <p>
-              Share your trip details. WhatsApp will open with a ready-to-send
-              enquiry.
+              Enter your trip details manually or select your pickup and
+              destination directly from the interactive map.
             </p>
+
+            <div class="booking-features">
+              <div>
+                <i class="bi bi-map"></i>
+                <span> Select locations from the interactive map </span>
+              </div>
+
+              <div>
+                <i class="bi bi-whatsapp"></i>
+                <span> Send enquiry directly through WhatsApp </span>
+              </div>
+
+              <div>
+                <i class="bi bi-car-front"></i>
+                <span> Maruti Suzuki Dzire • 5 Seater • AC </span>
+              </div>
+            </div>
+
+            <div class="vehicle-mini-card">
+              <div class="vehicle-mini-image">
+                <img src="../Images/Front.png" alt="Maruti Suzuki Dzire" />
+              </div>
+
+              <div>
+                <small>YOUR VEHICLE</small>
+
+                <strong>Maruti Suzuki Dzire</strong>
+
+                <span> 5 Seater • AC • Sedan </span>
+              </div>
+            </div>
           </div>
 
-          <form id="bookingForm" novalidate>
-            <!-- =================================================
-                         STEP 01
-                    ================================================== -->
+          <!-- RIGHT FORM -->
 
-            <div class="form-step">
-              <span> 01 </span>
+          <div class="booking-form-area">
+            <div class="section-title">
+              <span>WHATSAPP TRIP ENQUIRY</span>
 
-              <div>
-                <strong> Your details </strong>
+              <h2>Tell us about your trip</h2>
 
-                <small> How can we contact you? </small>
-              </div>
+              <div class="gold-line"></div>
             </div>
 
-            <div class="row g-3">
-              <div class="col-md-6">
-                <label for="fullName">
-                  Full Name
-                  <b>*</b>
-                </label>
+            <form id="bookingForm" novalidate>
+              <!-- CUSTOMER -->
 
-                <input
-                  type="text"
-                  id="fullName"
-                  class="form-control"
-                  placeholder="Enter your name"
-                  autocomplete="name"
-                  required
-                />
+              <div class="form-section-title">
+                <span>01</span>
+
+                <div>
+                  <strong>Your details</strong>
+                  <small>How can we contact you?</small>
+                </div>
               </div>
 
-              <div class="col-md-6">
-                <label for="phone">
-                  Mobile Number
-                  <b>*</b>
-                </label>
+              <div class="row g-3">
+                <div class="col-md-6">
+                  <label for="fullName"> Full Name <b>*</b> </label>
 
-                <input
-                  type="tel"
-                  id="phone"
-                  class="form-control"
-                  placeholder="10-digit mobile number"
-                  maxlength="10"
-                  inputmode="numeric"
-                  autocomplete="tel"
-                  required
-                />
-              </div>
-            </div>
+                  <input
+                    type="text"
+                    id="fullName"
+                    class="form-control"
+                    placeholder="Enter your name"
+                    autocomplete="name"
+                    required
+                  />
+                </div>
 
-            <!-- =================================================
-                         STEP 02
-                    ================================================== -->
+                <div class="col-md-6">
+                  <label for="phone"> Mobile Number <b>*</b> </label>
 
-            <div class="form-step mt-4">
-              <span> 02 </span>
-
-              <div>
-                <strong> Your journey </strong>
-
-                <small> Tell us about your trip </small>
-              </div>
-            </div>
-
-            <div class="row g-3">
-              <div class="col-md-6">
-                <label for="pickup">
-                  Pickup Location
-                  <b>*</b>
-                </label>
-
-                <input
-                  type="text"
-                  id="pickup"
-                  class="form-control"
-                  placeholder="Where should we pick you up?"
-                  required
-                />
+                  <input
+                    type="tel"
+                    id="phone"
+                    class="form-control"
+                    placeholder="10-digit mobile number"
+                    maxlength="10"
+                    inputmode="numeric"
+                    autocomplete="tel"
+                    required
+                  />
+                </div>
               </div>
 
-              <div class="col-md-6">
-                <label for="drop">
-                  Destination
-                  <b>*</b>
-                </label>
+              <!-- JOURNEY -->
 
-                <input
-                  type="text"
-                  id="drop"
-                  class="form-control"
-                  placeholder="Where are you going?"
-                  required
-                />
+              <div class="form-section-title mt-4">
+                <span>02</span>
+
+                <div>
+                  <strong>Your journey</strong>
+                  <small>Choose your travel locations</small>
+                </div>
               </div>
 
-              <div class="col-md-4">
-                <label for="tripType">
-                  Trip Type
-                  <b>*</b>
-                </label>
+              <!-- PICKUP -->
 
-                <select id="tripType" class="form-select" required>
-                  <option value="">Select</option>
+              <div class="location-field">
+                <label for="pickup"> Pickup Location <b>*</b> </label>
 
-                  <option value="Local Trip">Local Trip</option>
+                <div class="location-input-wrapper">
+                  <i class="bi bi-geo-alt-fill location-icon pickup-icon"></i>
 
-                  <option value="Airport Transfer">Airport Transfer</option>
+                  <input
+                    type="text"
+                    id="pickup"
+                    class="form-control location-input"
+                    placeholder="Enter pickup location"
+                    autocomplete="off"
+                    required
+                  />
 
-                  <option value="One Way">One Way</option>
+                  <button
+                    type="button"
+                    class="map-select-btn"
+                    data-location-target="pickup"
+                    title="Select pickup on map"
+                  >
+                    <i class="bi bi-map"></i>
 
-                  <option value="Round Trip">Round Trip</option>
-
-                  <option value="Outstation">Outstation</option>
-
-                  <option value="Multi Day Trip">Multi Day Trip</option>
-                </select>
+                    <span>Map</span>
+                  </button>
+                </div>
               </div>
 
-              <div class="col-md-4">
-                <label for="pickupDate">
-                  Travel Date
-                  <b>*</b>
-                </label>
+              <!-- SWAP -->
 
-                <input
-                  type="date"
-                  id="pickupDate"
-                  class="form-control"
-                  required
-                />
+              <div class="location-swap">
+                <button
+                  type="button"
+                  id="swapLocations"
+                  title="Swap pickup and destination"
+                >
+                  <i class="bi bi-arrow-down-up"></i>
+                </button>
               </div>
 
-              <div class="col-md-4">
-                <label for="pickupTime">
-                  Pickup Time
-                  <b>*</b>
-                </label>
+              <!-- DESTINATION -->
 
-                <input
-                  type="time"
-                  id="pickupTime"
-                  class="form-control"
-                  required
-                />
+              <div class="location-field">
+                <label for="drop"> Destination <b>*</b> </label>
+
+                <div class="location-input-wrapper">
+                  <i
+                    class="bi bi-geo-alt-fill location-icon destination-icon"
+                  ></i>
+
+                  <input
+                    type="text"
+                    id="drop"
+                    class="form-control location-input"
+                    placeholder="Enter destination"
+                    autocomplete="off"
+                    required
+                  />
+
+                  <button
+                    type="button"
+                    class="map-select-btn"
+                    data-location-target="drop"
+                    title="Select destination on map"
+                  >
+                    <i class="bi bi-map"></i>
+
+                    <span>Map</span>
+                  </button>
+                </div>
               </div>
 
-              <div class="col-md-4">
-                <label for="returnDate">
-                  Return Date
-                  <span> Optional </span>
-                </label>
+              <div class="map-help">
+                <i class="bi bi-info-circle"></i>
 
-                <input type="date" id="returnDate" class="form-control" />
+                You can type a location manually or select it from the
+                interactive map.
               </div>
 
-              <div class="col-md-4">
-                <label for="passengers">
-                  Passengers
-                  <b>*</b>
-                </label>
+              <!-- TRIP DETAILS -->
 
-                <select id="passengers" class="form-select" required>
-                  <option value="">Select</option>
+              <div class="row g-3 mt-2">
+                <div class="col-md-4">
+                  <label for="tripType"> Trip Type <b>*</b> </label>
 
-                  <option value="1">1</option>
+                  <select id="tripType" class="form-select" required>
+                    <option value="">Select</option>
 
-                  <option value="2">2</option>
+                    <option value="Local Trip">Local Trip</option>
 
-                  <option value="3">3</option>
+                    <option value="Airport Transfer">Airport Transfer</option>
 
-                  <option value="4">4</option>
+                    <option value="One Way">One Way</option>
 
-                  <option value="5">5</option>
-                </select>
-              </div>
+                    <option value="Round Trip">Round Trip</option>
 
-              <!-- FIXED VEHICLE -->
+                    <option value="Outstation">Outstation</option>
 
-              <div class="col-md-4">
-                <label> Vehicle </label>
+                    <option value="Multi Day Trip">Multi Day Trip</option>
+                  </select>
+                </div>
 
-                <div class="fixed-vehicle">
-                  <div class="fixed-vehicle-icon">
+                <div class="col-md-4">
+                  <label for="pickupDate"> Travel Date <b>*</b> </label>
+
+                  <input
+                    type="date"
+                    id="pickupDate"
+                    class="form-control"
+                    required
+                  />
+                </div>
+
+                <div class="col-md-4">
+                  <label for="pickupTime"> Pickup Time <b>*</b> </label>
+
+                  <input
+                    type="time"
+                    id="pickupTime"
+                    class="form-control"
+                    required
+                  />
+                </div>
+
+                <div class="col-md-4">
+                  <label for="returnDate">
+                    Return Date
+                    <span>Optional</span>
+                  </label>
+
+                  <input type="date" id="returnDate" class="form-control" />
+                </div>
+
+                <div class="col-md-4">
+                  <label for="passengers"> Passengers <b>*</b> </label>
+
+                  <select id="passengers" class="form-select" required>
+                    <option value="">Select</option>
+
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                  </select>
+                </div>
+
+                <div class="col-md-4">
+                  <label> Vehicle </label>
+
+                  <div class="fixed-vehicle">
                     <i class="bi bi-car-front-fill"></i>
+
+                    <div>
+                      <strong> Maruti Suzuki Dzire </strong>
+
+                      <small> 5 Seater • AC </small>
+                    </div>
+
+                    <i class="bi bi-check-circle-fill vehicle-check"></i>
+                  </div>
+                </div>
+              </div>
+
+              <!-- SUMMARY -->
+
+              <div id="tripSummary" class="trip-summary">
+                <div class="trip-summary-title">
+                  <i class="bi bi-eye"></i>
+
+                  Live Trip Summary
+                </div>
+
+                <div class="trip-summary-grid">
+                  <div class="summary-item">
+                    <small>Customer</small>
+
+                    <strong id="summaryName">-</strong>
                   </div>
 
-                  <div>
-                    <strong> Maruti Suzuki Dzire </strong>
+                  <div class="summary-item">
+                    <small>Mobile</small>
 
-                    <small> 5 Seater • AC • Sedan </small>
+                    <strong id="summaryPhone">-</strong>
                   </div>
 
-                  <i class="bi bi-check-circle-fill vehicle-check"></i>
+                  <div class="summary-item">
+                    <small>Pickup</small>
+
+                    <strong id="summaryPickup">-</strong>
+                  </div>
+
+                  <div class="summary-item">
+                    <small>Destination</small>
+
+                    <strong id="summaryDrop">-</strong>
+                  </div>
+
+                  <div class="summary-item">
+                    <small>Travel Date</small>
+
+                    <strong id="summaryDate">-</strong>
+                  </div>
+
+                  <div class="summary-item">
+                    <small>Pickup Time</small>
+
+                    <strong id="summaryTime">-</strong>
+                  </div>
+
+                  <div class="summary-item">
+                    <small>Trip Type</small>
+
+                    <strong id="summaryTrip">-</strong>
+                  </div>
+
+                  <div class="summary-item">
+                    <small>Passengers</small>
+
+                    <strong id="summaryPassengers">-</strong>
+                  </div>
+
+                  <div class="summary-item">
+                    <small>Vehicle</small>
+
+                    <strong>Maruti Suzuki Dzire</strong>
+                  </div>
                 </div>
               </div>
-            </div>
 
-            <!-- =================================================
-                         TRIP SUMMARY
-                    ================================================== -->
+              <!-- ADDITIONAL -->
 
-            <div id="tripSummary" class="trip-summary">
-              <div class="trip-summary-title">
-                <i class="bi bi-eye"></i>
+              <div class="form-section-title mt-4">
+                <span>03</span>
 
-                Live Trip Summary
-              </div>
+                <div>
+                  <strong> Additional requirements </strong>
 
-              <div class="trip-summary-grid">
-                <div class="summary-item">
-                  <small> Customer </small>
-
-                  <strong id="summaryName"> - </strong>
-                </div>
-
-                <div class="summary-item">
-                  <small> Mobile </small>
-
-                  <strong id="summaryPhone"> - </strong>
-                </div>
-
-                <div class="summary-item">
-                  <small> Pickup </small>
-
-                  <strong id="summaryPickup"> - </strong>
-                </div>
-
-                <div class="summary-item">
-                  <small> Destination </small>
-
-                  <strong id="summaryDrop"> - </strong>
-                </div>
-
-                <div class="summary-item">
-                  <small> Travel Date </small>
-
-                  <strong id="summaryDate"> - </strong>
-                </div>
-
-                <div class="summary-item">
-                  <small> Pickup Time </small>
-
-                  <strong id="summaryTime"> - </strong>
-                </div>
-
-                <div class="summary-item">
-                  <small> Trip Type </small>
-
-                  <strong id="summaryTrip"> - </strong>
-                </div>
-
-                <div class="summary-item">
-                  <small> Passengers </small>
-
-                  <strong id="summaryPassengers"> - </strong>
-                </div>
-
-                <div class="summary-item">
-                  <small> Vehicle </small>
-
-                  <strong> Maruti Suzuki Dzire </strong>
+                  <small> Anything else we should know? </small>
                 </div>
               </div>
-            </div>
 
-            <!-- =================================================
-                         STEP 03
-                    ================================================== -->
+              <label for="notes">
+                Message
+                <span>Optional</span>
+              </label>
 
-            <div class="form-step mt-4">
-              <span> 03 </span>
+              <textarea
+                id="notes"
+                class="form-control"
+                rows="4"
+                placeholder="Example: railway station pickup, luggage, return trip, etc."
+              ></textarea>
 
-              <div>
-                <strong> Additional requirements </strong>
+              <!-- SUBMIT -->
 
-                <small> Anything else we should know? </small>
-              </div>
-            </div>
+              <button type="submit" class="btn btn-whatsapp booking-button">
+                <i class="bi bi-whatsapp"></i>
 
-            <label for="notes">
-              Message
+                SEND TRIP REQUEST ON WHATSAPP
+              </button>
 
-              <span> Optional </span>
-            </label>
+              <p class="booking-note">
+                <i class="bi bi-shield-check"></i>
 
-            <textarea
-              id="notes"
-              class="form-control"
-              rows="4"
-              placeholder="Example: railway station pickup, luggage, return trip, etc."
-            ></textarea>
-
-            <!-- SUBMIT BUTTON -->
-
-            <button type="submit" class="btn btn-whatsapp booking-button">
-              <i class="bi bi-whatsapp"></i>
-
-              SEND TRIP REQUEST ON WHATSAPP
-            </button>
-
-            <p class="booking-note">
-              <i class="bi bi-info-circle"></i>
-
-              WhatsApp will open with your enquiry. Review the details and press
-              Send.
-            </p>
-          </form>
+                Your enquiry is prepared in WhatsApp. Review the details before
+                sending.
+              </p>
+            </form>
+          </div>
         </div>
       </div>
     </section>
 
     <!-- =====================================================
-         FAQ
-    ====================================================== -->
+     MAP MODAL
+===================================================== -->
+
+    <div id="mapModal" class="map-modal" aria-hidden="true">
+      <div id="mapModalOverlay" class="map-modal-overlay"></div>
+
+      <div class="map-modal-box">
+        <div class="map-modal-header">
+          <div>
+            <span> LOCATION SELECTOR </span>
+
+            <h3 id="mapModalTitle">Select Location</h3>
+          </div>
+
+          <button type="button" id="closeMapModal" class="map-close">
+            <i class="bi bi-x-lg"></i>
+          </button>
+        </div>
+
+        <div class="map-toolbar">
+          <div class="map-search">
+            <i class="bi bi-search"></i>
+
+            <input
+              type="text"
+              id="mapSearchInput"
+              placeholder="Search place, area, airport..."
+            />
+          </div>
+
+          <button
+            type="button"
+            id="useCurrentLocation"
+            class="current-location-btn"
+          >
+            <i class="bi bi-crosshair"></i>
+
+            Current location
+          </button>
+        </div>
+
+        <div id="googleMap" class="google-map"></div>
+
+        <div class="map-selected-bar">
+          <div>
+            <small> SELECTED LOCATION </small>
+
+            <strong id="selectedLocationText">
+              Move the map or search for a location
+            </strong>
+          </div>
+
+          <button type="button" id="confirmLocation" class="btn btn-gold">
+            Confirm Location
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- =====================================================
+     FAQ
+===================================================== -->
 
     <section id="faq" class="faq-section">
       <div class="container">
         <div class="section-title text-center">
-          <span> FAQ </span>
+          <span>FAQ</span>
 
           <h2>Frequently asked questions</h2>
 
@@ -1062,8 +1168,7 @@
             >
               <div class="accordion-body">
                 Fill in your trip details in the Plan Your Journey form.
-                WhatsApp will open with your enquiry, and you can review it and
-                press Send.
+                WhatsApp will open with your enquiry.
               </div>
             </div>
           </div>
@@ -1109,8 +1214,8 @@
               data-bs-parent="#faqAccordion"
             >
               <div class="accordion-body">
-                Yes. Select Airport Transfer in the trip type and provide your
-                pickup and destination details.
+                Yes. Select Airport Transfer and provide your pickup and
+                destination details.
               </div>
             </div>
           </div>
@@ -1123,7 +1228,7 @@
                 data-bs-toggle="collapse"
                 data-bs-target="#faqFour"
               >
-                Will my enquiry be sent automatically?
+                Can I select locations using the map?
               </button>
             </h2>
 
@@ -1133,8 +1238,8 @@
               data-bs-parent="#faqAccordion"
             >
               <div class="accordion-body">
-                The website prepares your enquiry and opens WhatsApp. You must
-                press the Send button in WhatsApp to send it.
+                Yes. Use the Map button beside Pickup Location or Destination to
+                select the location from the interactive map.
               </div>
             </div>
           </div>
@@ -1143,14 +1248,14 @@
     </section>
 
     <!-- =====================================================
-         CTA
-    ====================================================== -->
+     CTA
+===================================================== -->
 
     <section class="cta-section">
       <div class="container">
         <div class="cta">
           <div>
-            <span> READY TO TRAVEL? </span>
+            <span>READY TO TRAVEL?</span>
 
             <h2>Let's plan your next journey.</h2>
 
@@ -1167,13 +1272,13 @@
     </section>
 
     <!-- =====================================================
-         CONTACT
-    ====================================================== -->
+     CONTACT
+===================================================== -->
 
     <section id="contact" class="contact">
       <div class="container">
         <div class="section-title light text-center">
-          <span> CONTACT SK TRAVELS </span>
+          <span>CONTACT SK TRAVELS</span>
 
           <h2>Let's plan your journey</h2>
 
@@ -1185,7 +1290,7 @@
             <div class="contact-card">
               <i class="bi bi-telephone"></i>
 
-              <span> PHONE </span>
+              <span>PHONE</span>
 
               <a href="tel:+918300242430"> +91 8300242430 </a>
             </div>
@@ -1195,7 +1300,7 @@
             <div class="contact-card">
               <i class="bi bi-whatsapp"></i>
 
-              <span> WHATSAPP </span>
+              <span>WHATSAPP</span>
 
               <a
                 href="https://wa.me/918300242430"
@@ -1211,9 +1316,9 @@
             <div class="contact-card">
               <i class="bi bi-envelope"></i>
 
-              <span> EMAIL </span>
+              <span>EMAIL</span>
 
-              <a href="mailto:ridecomfort@gmail.com">
+              <a href="mailto:sktourandtravels0832@gmail.com">
                 sktourandtravels0832@gmail.com
               </a>
             </div>
@@ -1223,7 +1328,7 @@
             <div class="contact-card">
               <i class="bi bi-geo-alt"></i>
 
-              <span> LOCATION </span>
+              <span>LOCATION</span>
 
               <strong> Coimbatore, Tamil Nadu </strong>
             </div>
@@ -1252,8 +1357,8 @@
     </section>
 
     <!-- =====================================================
-         FOOTER
-    ====================================================== -->
+     FOOTER
+===================================================== -->
 
     <footer class="footer">
       <div class="container">
@@ -1265,7 +1370,7 @@
               </div>
 
               <div>
-                <strong> SK TRAVELS </strong>
+                <strong>SK TRAVELS</strong>
 
                 <small> TRAVEL & CAR RENTALS </small>
               </div>
@@ -1280,21 +1385,14 @@
           <div class="col-6 col-lg-3">
             <h3>Quick Links</h3>
 
-            <a href="#home"> Home </a>
-
-            <a href="#about"> About </a>
-
-            <a href="#fleet"> Our Car </a>
-
-            <a href="#destinations"> Destinations </a>
-
-            <a href="#services"> Services </a>
-
-            <a href="#gallery"> Gallery </a>
-
-            <a href="#booking"> Plan Trip </a>
-
-            <a href="#contact"> Contact </a>
+            <a href="#home">Home</a>
+            <a href="#about">About</a>
+            <a href="#fleet">Our Car</a>
+            <a href="#destinations">Destinations</a>
+            <a href="#services">Services</a>
+            <a href="#gallery">Gallery</a>
+            <a href="#booking">Plan Trip</a>
+            <a href="#contact">Contact</a>
           </div>
 
           <div class="col-6 col-lg-4">
@@ -1302,19 +1400,16 @@
 
             <p>
               <i class="bi bi-telephone"></i>
-
               +91 8300242430
             </p>
 
             <p>
               <i class="bi bi-envelope"></i>
-
               sktourandtravels0832@gmail.com
             </p>
 
             <p>
               <i class="bi bi-geo-alt"></i>
-
               Coimbatore, Tamil Nadu
             </p>
           </div>
@@ -1329,8 +1424,8 @@
     </footer>
 
     <!-- =====================================================
-         FLOATING WHATSAPP
-    ====================================================== -->
+     FLOATING WHATSAPP
+===================================================== -->
 
     <a
       href="https://wa.me/918300242430"
@@ -1343,22 +1438,22 @@
     </a>
 
     <!-- =====================================================
-         SCROLL TOP
-    ====================================================== -->
+     SCROLL TOP
+===================================================== -->
 
     <button id="scrollTop" class="scroll-top" aria-label="Scroll to top">
       <i class="bi bi-arrow-up"></i>
     </button>
 
     <!-- =====================================================
-         MOBILE ACTION BAR
-    ====================================================== -->
+     MOBILE ACTION BAR
+===================================================== -->
 
     <div class="mobile-action-bar">
       <a href="tel:+918300242430">
         <i class="bi bi-telephone-fill"></i>
 
-        <span> Call </span>
+        <span>Call</span>
       </a>
 
       <a
@@ -1368,25 +1463,34 @@
       >
         <i class="bi bi-whatsapp"></i>
 
-        <span> WhatsApp </span>
+        <span>WhatsApp</span>
       </a>
 
       <a href="#booking">
         <i class="bi bi-calendar2-check"></i>
 
-        <span> Book Ride </span>
+        <span>Book Ride</span>
       </a>
     </div>
 
     <!-- =====================================================
-         BOOTSTRAP JS
-    ====================================================== -->
+     BOOTSTRAP JS
+===================================================== -->
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
     <!-- =====================================================
-         CUSTOM JS
-    ====================================================== -->
+     LEAFLET JS
+===================================================== -->
+
+    <script
+      src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+      crossorigin=""
+    ></script>
+
+    <!-- =====================================================
+     SK TRAVELS JS
+===================================================== -->
 
     <script src="script.js"></script>
   </body>

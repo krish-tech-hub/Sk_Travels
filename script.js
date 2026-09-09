@@ -1,720 +1,523 @@
-/* =========================================================
-   SK TRAVELS
-   PROFESSIONAL TRAVEL WEBSITE
-   ========================================================= */
+/* =====================================================
+   LEAFLET + OPENSTREETMAP LOCATION SELECTOR
+===================================================== */
 
-/* =========================================================
-   BUSINESS DETAILS
-========================================================= */
+let map = null;
+let marker = null;
+let currentTarget = null;
+let selectedLocation = null;
 
-const WHATSAPP_NUMBER = "918300242430";
+const pickupInput = document.getElementById("pickup");
+const dropInput = document.getElementById("drop");
 
-const VEHICLE_NAME = "Maruti Suzuki Dzire";
-
-const VEHICLE_DETAILS = "5 Seater • AC • Sedan";
-
-/* =========================================================
-   DOM READY
-========================================================= */
-
-document.addEventListener("DOMContentLoaded", function () {
-  /* =================================================
-           ELEMENTS
-        ================================================= */
-
-  const form = document.getElementById("bookingForm");
-
+function updateTripSummary() {
+  const fullName = document.getElementById("fullName");
+  const phone = document.getElementById("phone");
   const pickupDate = document.getElementById("pickupDate");
+  const pickupTime = document.getElementById("pickupTime");
+  const tripType = document.getElementById("tripType");
+  const passengers = document.getElementById("passengers");
 
-  const returnDate = document.getElementById("returnDate");
+  const summaryName = document.getElementById("summaryName");
+  const summaryPhone = document.getElementById("summaryPhone");
+  const summaryPickup = document.getElementById("summaryPickup");
+  const summaryDrop = document.getElementById("summaryDrop");
+  const summaryDate = document.getElementById("summaryDate");
+  const summaryTime = document.getElementById("summaryTime");
+  const summaryTrip = document.getElementById("summaryTrip");
+  const summaryPassengers = document.getElementById("summaryPassengers");
 
-  const navbar = document.getElementById("mainNavbar");
-
-  const scrollTop = document.getElementById("scrollTop");
-
-  /* =================================================
-           GET TODAY
-        ================================================= */
-
-  function getToday() {
-    const today = new Date();
-
-    const localToday = new Date(
-      today.getTime() - today.getTimezoneOffset() * 60000,
-    );
-
-    return localToday.toISOString().split("T")[0];
+  if (summaryName) {
+    summaryName.textContent = fullName?.value || "-";
   }
 
-  /* =================================================
-           DATE SETTINGS
-        ================================================= */
-
-  if (pickupDate) {
-    pickupDate.min = getToday();
+  if (summaryPhone) {
+    summaryPhone.textContent = phone?.value || "-";
   }
 
-  if (returnDate) {
-    returnDate.min = getToday();
+  if (summaryPickup) {
+    summaryPickup.textContent = pickupInput?.value || "-";
   }
 
-  /* =================================================
-           PICKUP DATE CHANGE
-        ================================================= */
+  if (summaryDrop) {
+    summaryDrop.textContent = dropInput?.value || "-";
+  }
 
-  if (pickupDate && returnDate) {
-    pickupDate.addEventListener("change", function () {
-      if (!pickupDate.value) {
-        returnDate.min = getToday();
+  if (summaryDate) {
+    summaryDate.textContent = pickupDate?.value || "-";
+  }
 
-        return;
-      }
+  if (summaryTime) {
+    summaryTime.textContent = pickupTime?.value || "-";
+  }
 
-      returnDate.min = pickupDate.value;
+  if (summaryTrip) {
+    summaryTrip.textContent = tripType?.value || "-";
+  }
 
-      if (returnDate.value && returnDate.value < pickupDate.value) {
-        returnDate.value = "";
-      }
+  if (summaryPassengers) {
+    summaryPassengers.textContent = passengers?.value || "-";
+  }
+}
+
+const mapModal = document.getElementById("mapModal");
+const mapOverlay = document.getElementById("mapModalOverlay");
+const closeMapModal = document.getElementById("closeMapModal");
+const mapModalTitle = document.getElementById("mapModalTitle");
+const mapSearchInput = document.getElementById("mapSearchInput");
+const currentLocationButton = document.getElementById("useCurrentLocation");
+const mapElement = document.getElementById("googleMap");
+const selectedLocationText = document.getElementById("selectedLocationText");
+const confirmLocationButton = document.getElementById("confirmLocation");
+
+const DEFAULT_LAT = 11.0168;
+const DEFAULT_LNG = 76.9558;
+
+/* =====================================================
+   INITIALIZE LEAFLET MAP
+===================================================== */
+
+function initLeafletMap() {
+  if (!mapElement) {
+    console.error("Map element not found.");
+    return;
+  }
+
+  if (typeof L === "undefined") {
+    console.error("Leaflet library is not loaded.");
+    return;
+  }
+
+  if (map) {
+    setTimeout(function () {
+      map.invalidateSize();
+    }, 100);
+
+    return;
+  }
+
+  map = L.map(mapElement, {
+    center: [DEFAULT_LAT, DEFAULT_LNG],
+    zoom: 13,
+    zoomControl: true,
+    attributionControl: true,
+  });
+
+  /* =====================================================
+     OPENSTREETMAP TILES
+  ===================================================== */
+
+  L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+    maxZoom: 19,
+
+    attribution:
+      '&copy; <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener noreferrer">OpenStreetMap</a>',
+  }).addTo(map);
+
+  /* =====================================================
+     MARKER
+  ===================================================== */
+
+  marker = L.marker([DEFAULT_LAT, DEFAULT_LNG], {
+    draggable: true,
+  }).addTo(map);
+
+  /* =====================================================
+     MARKER DRAG
+  ===================================================== */
+
+  marker.on("dragend", function () {
+    const position = marker.getLatLng();
+
+    reverseGeocode(position.lat, position.lng);
+  });
+
+  /* =====================================================
+     MAP CLICK
+  ===================================================== */
+
+  map.on("click", function (event) {
+    setMapLocation(event.latlng.lat, event.latlng.lng);
+  });
+}
+
+/* =====================================================
+   SET MAP LOCATION
+===================================================== */
+
+function setMapLocation(lat, lng, address = "") {
+  if (!map || !marker) {
+    return;
+  }
+
+  const location = [lat, lng];
+
+  marker.setLatLng(location);
+
+  map.setView(location, 16, {
+    animate: true,
+  });
+
+  if (address) {
+    selectedLocation = {
+      address: address,
+      lat: lat,
+      lng: lng,
+    };
+
+    updateSelectedLocationText(address);
+
+    return;
+  }
+
+  reverseGeocode(lat, lng);
+}
+
+/* =====================================================
+   REVERSE GEOCODING
+===================================================== */
+
+async function reverseGeocode(lat, lng) {
+  try {
+    updateSelectedLocationText("Finding location...");
+
+    const url =
+      "https://nominatim.openstreetmap.org/reverse" +
+      "?format=jsonv2" +
+      "&lat=" +
+      encodeURIComponent(lat) +
+      "&lon=" +
+      encodeURIComponent(lng) +
+      "&zoom=18" +
+      "&addressdetails=1";
+
+    const response = await fetch(url, {
+      headers: {
+        Accept: "application/json",
+      },
     });
-  }
 
-  /* =================================================
-           FORMAT DATE
-        ================================================= */
-
-  function formatDate(value) {
-    if (!value) {
-      return "Not provided";
+    if (!response.ok) {
+      throw new Error("Reverse geocoding request failed");
     }
 
-    const dateObject = new Date(value + "T00:00:00");
+    const data = await response.json();
 
-    return dateObject.toLocaleDateString("en-IN", {
-      day: "2-digit",
-      month: "short",
-      year: "numeric",
-    });
+    const address = data.display_name || "Selected map location";
+
+    selectedLocation = {
+      address: address,
+
+      lat: lat,
+
+      lng: lng,
+    };
+
+    updateSelectedLocationText(address);
+  } catch (error) {
+    console.error("Reverse geocoding error:", error);
+
+    selectedLocation = {
+      address: "Selected map location",
+
+      lat: lat,
+
+      lng: lng,
+    };
+
+    updateSelectedLocationText("Selected map location");
+  }
+}
+
+/* =====================================================
+   SEARCH LOCATION
+===================================================== */
+
+async function searchLocation(query) {
+  if (!map || !query) {
+    return;
   }
 
-  /* =================================================
-           FORMAT TIME
-        ================================================= */
+  try {
+    updateSelectedLocationText("Searching location...");
 
-  function formatTime(value) {
-    if (!value) {
-      return "Not provided";
+    const url =
+      "https://nominatim.openstreetmap.org/search" +
+      "?format=jsonv2" +
+      "&q=" +
+      encodeURIComponent(query) +
+      "&countrycodes=in" +
+      "&limit=1" +
+      "&addressdetails=1";
+
+    const response = await fetch(url, {
+      headers: {
+        Accept: "application/json",
+      },
+    });
+
+    if (!response.ok) {
+      throw new Error("Location search request failed");
     }
 
-    const parts = value.split(":");
+    const results = await response.json();
 
-    const hours = Number(parts[0]);
+    if (!results || results.length === 0) {
+      updateSelectedLocationText("Location not found");
 
-    const minutes = Number(parts[1]);
+      alert("Location not found. Please try another search.");
 
-    const dateObject = new Date();
-
-    dateObject.setHours(hours, minutes, 0, 0);
-
-    return dateObject.toLocaleTimeString("en-IN", {
-      hour: "2-digit",
-      minute: "2-digit",
-      hour12: true,
-    });
-  }
-
-  /* =================================================
-           GET FORM VALUE
-        ================================================= */
-
-  function getValue(id) {
-    const element = document.getElementById(id);
-
-    if (!element) {
-      return "";
-    }
-
-    return element.value.trim();
-  }
-
-  /* =================================================
-           TRIP SUMMARY
-        ================================================= */
-
-  function updateTripSummary() {
-    const summary = document.getElementById("tripSummary");
-
-    if (!summary) {
       return;
     }
 
-    const name = getValue("fullName");
+    const result = results[0];
 
-    const phone = getValue("phone");
+    const lat = parseFloat(result.lat);
 
-    const pickup = getValue("pickup");
+    const lng = parseFloat(result.lon);
 
-    const drop = getValue("drop");
+    const address = result.display_name || query;
 
-    const tripType = document.getElementById("tripType")?.value || "";
+    setMapLocation(lat, lng, address);
+  } catch (error) {
+    console.error("Location search error:", error);
 
-    const date = document.getElementById("pickupDate")?.value || "";
+    updateSelectedLocationText("Search failed");
 
-    const time = document.getElementById("pickupTime")?.value || "";
-
-    const passengers = document.getElementById("passengers")?.value || "";
-
-    /* ---------------------------------------------
-               SUMMARY VALUES
-            --------------------------------------------- */
-
-    const summaryName = document.getElementById("summaryName");
-
-    const summaryPhone = document.getElementById("summaryPhone");
-
-    const summaryPickup = document.getElementById("summaryPickup");
-
-    const summaryDrop = document.getElementById("summaryDrop");
-
-    const summaryDate = document.getElementById("summaryDate");
-
-    const summaryTime = document.getElementById("summaryTime");
-
-    const summaryTrip = document.getElementById("summaryTrip");
-
-    const summaryPassengers = document.getElementById("summaryPassengers");
-
-    /* ---------------------------------------------
-               UPDATE
-            --------------------------------------------- */
-
-    if (summaryName) {
-      summaryName.textContent = name || "-";
-    }
-
-    if (summaryPhone) {
-      summaryPhone.textContent = phone || "-";
-    }
-
-    if (summaryPickup) {
-      summaryPickup.textContent = pickup || "-";
-    }
-
-    if (summaryDrop) {
-      summaryDrop.textContent = drop || "-";
-    }
-
-    if (summaryDate) {
-      summaryDate.textContent = date ? formatDate(date) : "-";
-    }
-
-    if (summaryTime) {
-      summaryTime.textContent = time ? formatTime(time) : "-";
-    }
-
-    if (summaryTrip) {
-      summaryTrip.textContent = tripType || "-";
-    }
-
-    if (summaryPassengers) {
-      summaryPassengers.textContent = passengers || "-";
-    }
-
-    /* ---------------------------------------------
-               SHOW SUMMARY
-            --------------------------------------------- */
-
-    const hasData =
-      name || phone || pickup || drop || tripType || date || time || passengers;
-
-    if (hasData) {
-      summary.classList.add("show");
-    } else {
-      summary.classList.remove("show");
-    }
+    alert("Unable to search location right now. Please try again.");
   }
+}
 
-  /* =================================================
-           LIVE SUMMARY
-        ================================================= */
+/* =====================================================
+   SEARCH INPUT
+===================================================== */
 
-  if (form) {
-    form.addEventListener("input", updateTripSummary);
+if (mapSearchInput) {
+  mapSearchInput.addEventListener("keydown", function (event) {
+    if (event.key !== "Enter") {
+      return;
+    }
 
-    form.addEventListener("change", updateTripSummary);
-  }
+    event.preventDefault();
 
-  /* =================================================
-           PHONE INPUT
-        ================================================= */
+    const query = mapSearchInput.value.trim();
 
-  const phoneInput = document.getElementById("phone");
+    if (!query) {
+      return;
+    }
 
-  if (phoneInput) {
-    phoneInput.addEventListener("input", function () {
-      phoneInput.value = phoneInput.value.replace(/\D/g, "").slice(0, 10);
+    searchLocation(query);
+  });
+}
 
-      updateTripSummary();
-    });
-  }
+/* =====================================================
+   CURRENT LOCATION
+===================================================== */
 
-  /* =================================================
-           BOOKING FORM
-        ================================================= */
+if (currentLocationButton) {
+  currentLocationButton.addEventListener("click", function () {
+    if (!navigator.geolocation) {
+      alert("Geolocation is not supported by your browser.");
 
-  if (form) {
-    form.addEventListener("submit", function (event) {
-      event.preventDefault();
+      return;
+    }
 
-      /* =====================================
-                       GET VALUES
-                    ===================================== */
+    currentLocationButton.disabled = true;
 
-      const name = getValue("fullName");
+    currentLocationButton.innerHTML = `
+        <i class="bi bi-hourglass-split"></i>
+        Locating...
+      `;
 
-      const phone = getValue("phone");
+    navigator.geolocation.getCurrentPosition(
+      function (position) {
+        const lat = position.coords.latitude;
 
-      const pickup = getValue("pickup");
+        const lng = position.coords.longitude;
 
-      const drop = getValue("drop");
+        setMapLocation(lat, lng);
 
-      const tripType = document.getElementById("tripType")?.value || "";
+        currentLocationButton.disabled = false;
 
-      const date = document.getElementById("pickupDate")?.value || "";
+        currentLocationButton.innerHTML = `
+            <i class="bi bi-crosshair"></i>
+            Current location
+          `;
+      },
 
-      const time = document.getElementById("pickupTime")?.value || "";
+      function (error) {
+        console.error("Geolocation error:", error);
 
-      const returnTripDate = document.getElementById("returnDate")?.value || "";
+        currentLocationButton.disabled = false;
 
-      const passengers = document.getElementById("passengers")?.value || "";
-
-      const notes = getValue("notes") || "None";
-
-      /* =====================================
-                       REQUIRED VALIDATION
-                    ===================================== */
-
-      if (
-        !name ||
-        !phone ||
-        !pickup ||
-        !drop ||
-        !tripType ||
-        !date ||
-        !time ||
-        !passengers
-      ) {
-        alert("Please fill all required fields.");
-
-        return;
-      }
-
-      /* =====================================
-                       PHONE VALIDATION
-                    ===================================== */
-
-      const phoneDigits = phone.replace(/\D/g, "");
-
-      if (phoneDigits.length !== 10) {
-        alert("Please enter a valid 10-digit mobile number.");
-
-        return;
-      }
-
-      /* =====================================
-                       DATE VALIDATION
-                    ===================================== */
-
-      if (returnTripDate && returnTripDate < date) {
-        alert("Return date cannot be earlier than the travel date.");
-
-        return;
-      }
-
-      /* =====================================
-                       WHATSAPP MESSAGE
-                    ===================================== */
-
-      const message = `🚗 *SK TRAVELS*
-━━━━━━━━━━━━━━━━━━━━
-
-📋 *NEW TRIP ENQUIRY*
-
-👤 *CUSTOMER DETAILS*
-
-Name: ${name}
-
-Mobile: ${phone}
-
-
-🗺️ *JOURNEY DETAILS*
-
-Pickup: ${pickup}
-
-Destination: ${drop}
-
-Travel Date: ${formatDate(date)}
-
-Pickup Time: ${formatTime(time)}
-
-Return Date: ${returnTripDate ? formatDate(returnTripDate) : "Not provided"}
-
-
-👥 *PASSENGERS*
-
-Passengers: ${passengers}
-
-
-🚘 *VEHICLE*
-
-${VEHICLE_NAME}
-
-${VEHICLE_DETAILS}
-
-
-🔄 *TRIP TYPE*
-
-${tripType}
-
-
-📝 *ADDITIONAL REQUIREMENTS*
-
-${notes}
-
-
-━━━━━━━━━━━━━━━━━━━━
-
-Please confirm availability
-and share the trip quotation.
-
-Thank you for choosing
-*SK TRAVELS* 🚗`;
-
-      /* =====================================
-                       WHATSAPP URL
-                    ===================================== */
-
-      const whatsappURL =
-        "https://wa.me/" +
-        WHATSAPP_NUMBER +
-        "?text=" +
-        encodeURIComponent(message);
-
-      /* =====================================
-                       OPEN WHATSAPP
-                    ===================================== */
-
-      const whatsappWindow = window.open(whatsappURL, "_blank");
-
-      /* =====================================
-                       RESET ONLY IF OPENED
-                    ===================================== */
-
-      if (whatsappWindow) {
-        /* ---------------------------------
-                           RESET FORM
-                        --------------------------------- */
-
-        form.reset();
-
-        /* ---------------------------------
-                           RESET DATE LIMITS
-                        --------------------------------- */
-
-        if (pickupDate) {
-          pickupDate.min = getToday();
-        }
-
-        if (returnDate) {
-          returnDate.min = getToday();
-        }
-
-        /* ---------------------------------
-                           HIDE SUMMARY
-                        --------------------------------- */
-
-        const summary = document.getElementById("tripSummary");
-
-        if (summary) {
-          summary.classList.remove("show");
-        }
-
-        /* ---------------------------------
-                           RESET SUMMARY
-                        --------------------------------- */
-
-        const summaryFields = [
-          "summaryName",
-
-          "summaryPhone",
-
-          "summaryPickup",
-
-          "summaryDrop",
-
-          "summaryDate",
-
-          "summaryTime",
-
-          "summaryTrip",
-
-          "summaryPassengers",
-        ];
-
-        summaryFields.forEach(function (id) {
-          const element = document.getElementById(id);
-
-          if (element) {
-            element.textContent = "-";
-          }
-        });
-
-        /* ---------------------------------
-                           SUCCESS MESSAGE
-                        --------------------------------- */
-
-        showSuccessMessage();
-      } else {
-        /* ---------------------------------
-                           POPUP BLOCKED
-                        --------------------------------- */
+        currentLocationButton.innerHTML = `
+            <i class="bi bi-crosshair"></i>
+            Current location
+          `;
 
         alert(
-          "WhatsApp could not be opened. Please allow pop-ups and try again.",
+          "Unable to get your current location. Please allow location permission.",
         );
-      }
-    });
+      },
+
+      {
+        enableHighAccuracy: true,
+
+        timeout: 10000,
+
+        maximumAge: 0,
+      },
+    );
+  });
+}
+
+/* =====================================================
+   UPDATE SELECTED LOCATION
+===================================================== */
+
+function updateSelectedLocationText(text) {
+  if (selectedLocationText) {
+    selectedLocationText.textContent = text;
+  }
+}
+
+/* =====================================================
+   OPEN MAP MODAL
+===================================================== */
+
+function openMapModal(target) {
+  currentTarget = target;
+
+  selectedLocation = null;
+
+  if (mapModalTitle) {
+    mapModalTitle.textContent =
+      target === "pickup" ? "Select Pickup Location" : "Select Destination";
   }
 
-  /* =================================================
-           SUCCESS MESSAGE
-        ================================================= */
-
-  function showSuccessMessage() {
-    const oldMessage = document.querySelector(".booking-success");
-
-    if (oldMessage) {
-      oldMessage.remove();
-    }
-
-    const success = document.createElement("div");
-
-    success.className = "booking-success";
-
-    success.innerHTML = `
-
-                <i class="bi bi-check-circle-fill"></i>
-
-                <div>
-
-                    <strong>
-                        Enquiry Prepared Successfully
-                    </strong>
-
-                    <small>
-                        Your trip details are ready in WhatsApp.
-                        Please press Send.
-                    </small>
-
-                </div>
-
-            `;
-
-    if (form) {
-      form.prepend(success);
-    }
-
-    setTimeout(function () {
-      if (!success) {
-        return;
-      }
-
-      success.style.opacity = "0";
-
-      success.style.transform = "translateY(-10px)";
-
-      setTimeout(function () {
-        if (success.parentNode) {
-          success.remove();
-        }
-      }, 400);
-    }, 5000);
+  if (selectedLocationText) {
+    selectedLocationText.textContent = "Move the map or search for a location";
   }
 
-  /* =================================================
-           NAVBAR SCROLL
-        ================================================= */
+  if (mapSearchInput) {
+    mapSearchInput.value = "";
+  }
 
-  function handleNavbarScroll() {
-    if (!navbar) {
+  if (!mapModal) {
+    return;
+  }
+
+  mapModal.classList.add("show");
+
+  mapModal.setAttribute("aria-hidden", "false");
+
+  document.body.style.overflow = "hidden";
+
+  setTimeout(function () {
+    initLeafletMap();
+
+    if (!map) {
       return;
     }
 
-    if (window.scrollY > 40) {
-      navbar.classList.add("scrolled");
-    } else {
-      navbar.classList.remove("scrolled");
+    map.invalidateSize();
+
+    let existingValue = "";
+
+    if (target === "pickup" && pickupInput) {
+      existingValue = pickupInput.value;
     }
+
+    if (target === "drop" && dropInput) {
+      existingValue = dropInput.value;
+    }
+
+    if (existingValue) {
+      searchLocation(existingValue);
+    }
+  }, 250);
+}
+
+/* =====================================================
+   CLOSE MAP
+===================================================== */
+
+function closeMap() {
+  if (!mapModal) {
+    return;
   }
 
-  window.addEventListener("scroll", handleNavbarScroll);
+  mapModal.classList.remove("show");
 
-  handleNavbarScroll();
+  mapModal.setAttribute("aria-hidden", "true");
 
-  /* =================================================
-           MOBILE NAVBAR CLOSE
-        ================================================= */
+  document.body.style.overflow = "";
+}
 
-  document.querySelectorAll(".navbar-nav .nav-link").forEach(function (link) {
-    link.addEventListener("click", function () {
-      const menu = document.getElementById("mainMenu");
+/* =====================================================
+   MAP BUTTONS
+===================================================== */
 
-      if (menu && menu.classList.contains("show")) {
-        const collapse = bootstrap.Collapse.getOrCreateInstance(menu);
+document.querySelectorAll(".map-select-btn").forEach(function (button) {
+  button.addEventListener("click", function () {
+    const target = button.dataset.locationTarget;
 
-        collapse.hide();
-      }
-    });
+    openMapModal(target);
   });
+});
 
-  /* =================================================
-           ACTIVE NAVIGATION
-        ================================================= */
+/* =====================================================
+   CLOSE BUTTON
+===================================================== */
 
-  const sections = document.querySelectorAll("section[id]");
+if (closeMapModal) {
+  closeMapModal.addEventListener("click", closeMap);
+}
 
-  const navLinks = document.querySelectorAll(".navbar-nav .nav-link");
+if (mapOverlay) {
+  mapOverlay.addEventListener("click", closeMap);
+}
 
-  function updateActiveNavigation() {
-    let currentSection = "home";
+/* =====================================================
+   ESC KEY
+===================================================== */
 
-    sections.forEach(function (section) {
-      const sectionTop = section.offsetTop - 180;
-
-      if (window.scrollY >= sectionTop) {
-        currentSection = section.getAttribute("id");
-      }
-    });
-
-    navLinks.forEach(function (link) {
-      link.classList.remove("active");
-
-      const href = link.getAttribute("href");
-
-      if (href === "#" + currentSection) {
-        link.classList.add("active");
-      }
-    });
-  }
-
-  window.addEventListener("scroll", updateActiveNavigation);
-
-  updateActiveNavigation();
-
-  /* =================================================
-           SMOOTH SCROLL
-        ================================================= */
-
-  document.querySelectorAll('a[href^="#"]').forEach(function (link) {
-    link.addEventListener("click", function (event) {
-      const targetId = link.getAttribute("href");
-
-      if (!targetId || targetId === "#") {
-        return;
-      }
-
-      const target = document.querySelector(targetId);
-
-      if (!target) {
-        return;
-      }
-
-      event.preventDefault();
-
-      const navbarHeight = navbar ? navbar.offsetHeight : 0;
-
-      const targetPosition =
-        target.getBoundingClientRect().top + window.scrollY - navbarHeight;
-
-      window.scrollTo({
-        top: targetPosition,
-
-        behavior: "smooth",
-      });
-    });
-  });
-
-  /* =================================================
-           SCROLL REVEAL
-        ================================================= */
-
-  const revealElements = document.querySelectorAll(
-    ".feature, " +
-      ".fleet-card, " +
-      ".destination-card, " +
-      ".service-card, " +
-      ".gallery-item, " +
-      ".contact-card, " +
-      ".about-image, " +
-      ".booking-card, " +
-      ".faq-accordion",
-  );
-
-  revealElements.forEach(function (element) {
-    element.classList.add("reveal");
-  });
-
-  if ("IntersectionObserver" in window) {
-    const revealObserver = new IntersectionObserver(
-      function (entries) {
-        entries.forEach(function (entry) {
-          if (entry.isIntersecting) {
-            entry.target.classList.add("active");
-
-            revealObserver.unobserve(entry.target);
-          }
-        });
-      },
-      {
-        threshold: 0.12,
-      },
-    );
-
-    revealElements.forEach(function (element) {
-      revealObserver.observe(element);
-    });
-  } else {
-    revealElements.forEach(function (element) {
-      element.classList.add("active");
-    });
-  }
-
-  /* =================================================
-           SCROLL TO TOP
-        ================================================= */
-
-  if (scrollTop) {
-    window.addEventListener("scroll", function () {
-      if (window.scrollY > 500) {
-        scrollTop.classList.add("show");
-      } else {
-        scrollTop.classList.remove("show");
-      }
-    });
-
-    scrollTop.addEventListener("click", function () {
-      window.scrollTo({
-        top: 0,
-
-        behavior: "smooth",
-      });
-    });
-  }
-
-  /* =================================================
-           PREVENT OLD FORM DATA ON PAGE LOAD
-        ================================================= */
-
-  if (form) {
-    updateTripSummary();
+document.addEventListener("keydown", function (event) {
+  if (
+    event.key === "Escape" &&
+    mapModal &&
+    mapModal.classList.contains("show")
+  ) {
+    closeMap();
   }
 });
+
+/* =====================================================
+   CONFIRM LOCATION
+===================================================== */
+
+if (confirmLocationButton) {
+  confirmLocationButton.addEventListener("click", function () {
+    if (!currentTarget) {
+      return;
+    }
+
+    if (!selectedLocation) {
+      alert("Please select a location on the map first.");
+
+      return;
+    }
+
+    if (currentTarget === "pickup" && pickupInput) {
+      pickupInput.value = selectedLocation.address;
+    }
+
+    if (currentTarget === "drop" && dropInput) {
+      dropInput.value = selectedLocation.address;
+    }
+
+    updateTripSummary();
+
+    closeMap();
+  });
+}
