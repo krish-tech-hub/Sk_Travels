@@ -7,7 +7,7 @@
    BUSINESS DETAILS
 ========================================================= */
 
-const WHATSAPP_NUMBER = "918825502643";
+const WHATSAPP_NUMBER = "918300242430";
 
 const VEHICLE_NAME = "Maruti Suzuki Dzire";
 

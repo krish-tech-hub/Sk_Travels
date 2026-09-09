@@ -604,6 +604,7 @@ textarea {
   object-fit: cover;
 
   border-radius: 15px;
+  background-image: cover;
 }
 
 .about-badge {
